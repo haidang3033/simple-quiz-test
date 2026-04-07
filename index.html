@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quick quiz based on Excel</title>
+    <title>Hệ thống Trắc nghiệm Excel</title>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -90,21 +90,34 @@
         }
 
         .quiz-area { flex: 3; overflow-y: auto; padding-right: 10px; }
-        .nav-sidebar {
-            flex: 1; max-width: 300px; overflow-y: auto; background: var(--card-bg);
-            padding: 15px; border-radius: 10px; border: 1px solid var(--border-color);
-        }
-
-        .question-card {
-            background: var(--card-bg); border: 2px solid var(--border-color);
-            border-radius: 15px; padding: 20px; margin-bottom: 20px; transition: border-color 0.3s;
-        }
+		.nav-sidebar {
+			flex: 1; 
+			max-width: 300px; 
+			overflow-y: auto;
+			background: color-mix(in srgb, var(--card-bg) 85%, transparent);
+			backdrop-filter: blur(10px);
+			-webkit-backdrop-filter: blur(10px);
+			padding: 15px; 
+			border-radius: 10px; 
+			border: 1px solid var(--border-color);
+			box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+		}
+		.question-card {
+			background: color-mix(in srgb, var(--card-bg) 85%, transparent); 
+			backdrop-filter: blur(10px); 
+			-webkit-backdrop-filter: blur(10px);
+			border: 2px solid var(--border-color);
+			border-radius: 15px;
+			padding: 20px;
+			margin-bottom: 20px;
+			transition: border-color 0.3s;
+		}
         .question-card.correct { border-color: var(--nav-correct); border-width: 3px; }
         .question-card.wrong { border-color: var(--nav-wrong); border-width: 3px; }
 
-        .question-card.group-header {
-            border: 2px dashed var(--nav-ans);
-            background: rgba(52, 152, 219, 0.05);
+		.question-card.group-header {
+			border: 2px dashed var(--nav-ans);
+			background: color-mix(in srgb, var(--card-bg) 85%, transparent);
         }
 
         .question-title { font-weight: bold; margin-bottom: 10px; }
@@ -119,7 +132,8 @@
         .nav-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); gap: 10px; }
         .nav-box {
             height: 40px; display: flex; align-items: center; justify-content: center;
-            border-radius: 5px; font-weight: bold; background-color: var(--nav-unans); color: #fff; cursor: pointer;
+            border-radius: 5px; font-weight: bold; background: color-mix(in srgb, var(--card-bg) 85%, transparent); 
+			backdrop-filter: blur(10px); color: #fff; cursor: pointer; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
         }
         .nav-box.answered { background-color: var(--nav-ans); }
         .nav-box.correct { background-color: var(--nav-correct); }
@@ -204,9 +218,9 @@
     <div class="modal" id="settingsModal">
         <div class="modal-content">
             <h3>Setting</h3>
-            <div class="setting-row"><span>Question limit:</span> <div><input type="number" id="setLimit" value="0" style="width: 60px;"> (0 = All)</div></div>
-            <div class="setting-row"><span>Shuffle question:</span> <label class="switch"><input type="checkbox" id="setShuffle"><span class="slider"></span></label></div>
-            <div class="setting-row"><span>Shuffle answer:</span> <label class="switch"><input type="checkbox" id="setAnswersShuffle" checked><span class="slider"></span></label></div>
+            <div class="setting-row"><span>Max number of questions:</span> <div><input type="number" id="setLimit" value="0" style="width: 60px;"> (0 = All questions)</div></div>
+            <div class="setting-row"><span>Shuffle questions:</span> <label class="switch"><input type="checkbox" id="setShuffle"><span class="slider"></span></label></div>
+            <div class="setting-row"><span>Shuffle answers:</span> <label class="switch"><input type="checkbox" id="setAnswersShuffle" checked><span class="slider"></span></label></div>
             <div class="setting-row">
                 <span>Interface mode:</span> 
                 <select id="setTheme" onchange="applySettings()">
@@ -220,7 +234,7 @@
                 <input type="range" id="setBgBrightness" min="0" max="1" step="0.05" value="1" oninput="applySettings()">
             </div>
             <div class="setting-row"><span>Background image (Link):</span> <input type="text" id="setBgLink" onchange="applySettings()" placeholder="Image URL..."></div>
-            <div class="setting-row"><span>Background image (Upload file):</span> <input type="file" id="setBgFile" accept="image/*" style="width: 170px;"></div>
+            <div class="setting-row"><span>Background image (File upload):</span> <input type="file" id="setBgFile" accept="image/*" style="width: 170px;"></div>
             
             <div class="setting-row"><span>Do not use HTML/MD:</span> <label class="switch"><input type="checkbox" id="setDisableFormat"><span class="slider"></span></label></div>
             <div class="setting-row"><span>Answers can be reselected after submit quiz:</span> <label class="switch"><input type="checkbox" id="setAllowChange"><span class="slider"></span></label></div>
@@ -244,6 +258,7 @@
             }
         } catch (e) { console.warn("Katex error:", e); }
 
+        // ĐÃ SỬA: Code khởi tạo SmartyPants an toàn tuyệt đối
         try {
             const smartypants = window.markedSmartypants || (typeof markedSmartypants !== 'undefined' ? markedSmartypants : null);
             if (smartypants) {
@@ -327,6 +342,7 @@
             return marked.parse(text.toString());
         }
 
+        // Thêm hàm xáo trộn mảng (Fisher-Yates)
         function shuffleArray(array) {
             let shuffled = [...array]; 
             for (let i = shuffled.length - 1; i > 0; i--) {
@@ -449,6 +465,7 @@
                 q.id = idx;
                 q.userAnswers = []; 
                 
+                // ĐÃ SỬA: Dùng đúng ID 'setAnswersShuffle' và gọi hàm shuffleArray thay vì sort
                 if(document.getElementById('setAnswersShuffle').checked && q.type !== 3 && !q.isHeader) {
                     q.answers = shuffleArray(q.answers);
                 }
@@ -481,7 +498,7 @@
 
                 let html = '';
                 if (q.isHeader) {
-                    html += `<div class="question-title">📑 Group question (Group ${q.groupId}):</div>`;
+                    html += `<div class="question-title">📑 Group question (Group ${q.groupId})</div>`;
                 } else {
                     html += `<div class="question-title">Quesion ${q.displayIndex} ${q.groupId ? `(In group ${q.groupId})` : ''}:</div>`;
                 }
