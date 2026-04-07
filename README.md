@@ -5,9 +5,6 @@ use .xlsx file
 | 1 |  | 1 | do you like burger | note here | #.no | #.no | ##.yes|
 
 
-no.    group no.    type    question    note    answers->...
-1                    1      buger                #.no    #.no    ##.yes    #.no
-
 - no.: number order
 - group no.: for questions that belong in a group with a paragraph or idk...
 - type: 
