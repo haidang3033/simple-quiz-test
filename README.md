@@ -23,3 +23,14 @@ no.    group no.    type    question    note    answers->...
                    type 3 question only require you to type in the whole sentence then add ##. at the start
 
 you can use markdown
+
+do this if you want a group of question answer
+
+| no | group no.  | type | quesion | note | answers | --> | ... |
+|--|--|--|--|--|--|--|--|
+|  | 1 |  | demoman is the spy | this is a big header for one big question | | | |
+|1|1|1|is he a spy|is he|##.yes|#.idk|#.no|
+|2|1|2|thank mate|thanks|##.yes|##.yes|##.yes|
+|3|1|3|The||##.Demoman is the spy!|||
+
+this is not cool
