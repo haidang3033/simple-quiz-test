@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hệ thống Trắc nghiệm Excel</title>
+    <title>Quick Excel quiz</title>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -500,7 +500,7 @@
                 if (q.isHeader) {
                     html += `<div class="question-title">📑 Group question (Group ${q.groupId})</div>`;
                 } else {
-                    html += `<div class="question-title">Quesion ${q.displayIndex} ${q.groupId ? `(In group ${q.groupId})` : ''}:</div>`;
+                    html += `<div class="question-title">Question ${q.displayIndex} ${q.groupId ? `(In group ${q.groupId})` : ''}:</div>`;
                 }
 
                 html += `<div>${formatText(q.content)}</div>`;
