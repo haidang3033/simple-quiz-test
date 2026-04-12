@@ -132,8 +132,8 @@
         .nav-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); gap: 10px; }
         .nav-box {
             height: 40px; display: flex; align-items: center; justify-content: center;
-            border-radius: 5px; font-weight: bold; background: color-mix(in srgb, var(--card-bg) 85%, transparent); 
-			backdrop-filter: blur(10px); color: #fff; cursor: pointer; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+            border-radius: 5px; font-weight: bold; background-color: var(--nav-unans); color: #fff; cursor: pointer;
+																										  
         }
         .nav-box.answered { background-color: var(--nav-ans); }
         .nav-box.correct { background-color: var(--nav-correct); }
@@ -242,7 +242,7 @@
             <div class="setting-row"><span>Do not reset the timer when retrying:</span> <label class="switch"><input type="checkbox" id="setKeepTimer"><span class="slider"></span></label></div>
             
             <div style="text-align: right; margin-top: 20px;">
-                <button onclick="document.getElementById('settingsModal').style.display='none'">Đóng</button>
+                <button onclick="document.getElementById('settingsModal').style.display='none'">Close</button>
             </div>
         </div>
     </div>
@@ -257,8 +257,7 @@
                 marked.use(window.markedKatex({ throwOnError: false }));
             }
         } catch (e) { console.warn("Katex error:", e); }
-
-        // ĐÃ SỬA: Code khởi tạo SmartyPants an toàn tuyệt đối
+		
         try {
             const smartypants = window.markedSmartypants || (typeof markedSmartypants !== 'undefined' ? markedSmartypants : null);
             if (smartypants) {
@@ -342,7 +341,6 @@
             return marked.parse(text.toString());
         }
 
-        // Thêm hàm xáo trộn mảng (Fisher-Yates)
         function shuffleArray(array) {
             let shuffled = [...array]; 
             for (let i = shuffled.length - 1; i > 0; i--) {
@@ -465,7 +463,6 @@
                 q.id = idx;
                 q.userAnswers = []; 
                 
-                // ĐÃ SỬA: Dùng đúng ID 'setAnswersShuffle' và gọi hàm shuffleArray thay vì sort
                 if(document.getElementById('setAnswersShuffle').checked && q.type !== 3 && !q.isHeader) {
                     q.answers = shuffleArray(q.answers);
                 }
